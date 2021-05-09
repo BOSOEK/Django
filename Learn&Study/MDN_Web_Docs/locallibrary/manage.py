@@ -21,3 +21,13 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# 장고는 저장되어야 할 데이터의 구조에 영향을 미치는 방식으로 모델 변경시 마다 아래의 명령어를 실행해야 함.
+# python manage.py makemigrations
+# python manage.py migrate
+# 그러면 데이터 베이스 안의 모델들을 위한 테이블들을 정의함(ORM을 이용해서)
+
+# makemigrations : 프로젝트에 설치된 모든 어플리케이션에 대한 migration을 생성한다.(적용은 하지 않는다.)
+# makemigrations는 그저 단일 프로젝트를 위한 migrations을 실행하기 위해 어플리케이션 이름 지정 가능
+
+# migrate : migration을 실제로 데이터베이스에 적용함
