@@ -1,6 +1,6 @@
 from django.db import models
+from django.urls import reverse
 
-# Create your models here.
 
 class MyModelName(models.Model):
     # Model 클래스에서 파생된 모델을 정의하는 일반적인 클래스
@@ -24,3 +24,10 @@ class MyModelName(models.Model):
     def __str__(self):
         # 모델 이름 개체를 나타내는 문자열(관리사이트 등)
         return self.field_name
+
+# 장르(Genre) 모델 : 책 카테고리에 관한 정보를 저장
+class Genre(models.Model) :
+    name = models.CharField(max_length=200, help_text='Enter a book genre')
+
+    def __str__(self):
+        return self.name
