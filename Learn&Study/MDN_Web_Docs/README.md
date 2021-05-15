@@ -55,3 +55,13 @@
     > 모델의 객체 속성을 사용하여 특정 기준과 일치하는 레코드를 검색 할 수도 있다.
     * ```objects.all()``` : 모델의 모든 레코드들을 QuerySet으로 가져올 수 있다.
     * ```filter()``` : 반환된 쿼리 셋을 지정한 문자 또는 숫자 필드를 특정 기준으로 필터링 가능하다
+    ```
+    test = 모델명.objects.filter(속성 = '값')
+    ```
+    > filter의 속성
+    * ```필드명__contains = '값'``` : 값(대소문자 구별)을 포함하는 필드들을 가져옴(모든 일치 방법 목록 : https://docs.djangoproject.com/en/2.0/ref/models/querysets/#field-lookups)
+    
+    > 외래키를 이용한 필터링
+    ```변수 = 모델.objects.filter(외래키 모델__필드명__속성 = '값')
+
+    > 그 외의 쿼리 : https://docs.djangoproject.com/en/2.0/topics/db/queries/
