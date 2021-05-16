@@ -41,7 +41,7 @@
     def get_absolute_url(self) :
         return reverse('model-detail-view), args=[str(self.id)]
     ```
-### 1. 모델의 관리
+### 2. 모델의 관리
 * ### 레코드의 생성과 수정
     >레코드(데이터베이스의 행(새로운 데이터))를 생성(저장)하려면 모델의 인스턴스를 정의하고 ```save()``` 를 호출한다.
     ```
@@ -62,6 +62,21 @@
     * ```필드명__contains = '값'``` : 값(대소문자 구별)을 포함하는 필드들을 가져옴(모든 일치 방법 목록 : https://docs.djangoproject.com/en/2.0/ref/models/querysets/#field-lookups)
     
     > 외래키를 이용한 필터링
-    ```변수 = 모델.objects.filter(외래키 모델__필드명__속성 = '값')
-
+    ```
+    변수 = 모델.objects.filter(외래키 모델__필드명__속성 = '값')
+    ```
     > 그 외의 쿼리 : https://docs.djangoproject.com/en/2.0/topics/db/queries/
+    
+### 3. 데이터 마이그레이션
+* ### 장고는 __ORM(Object-Relational-Mapper : 객체-관계-매퍼)__ 사용하여 모델 정의를 기본 데이터베이스에서 사용하는 데이터 구조에 매핑한다
+    > 모델의 정의를 바꿀때마다 장고는 변화를 추적, 데이터베이스 안의 기본 데이터 구조가 모델과 일치하도록 자동으로 이전하는 스크립트(migrations)를 생성한다. 
+* ### 데이터 마이그레이션 실행
+    ```
+    python manage.py makemigrations
+    python manage.py migrate
+    ```
+    * ```makemigrations``` : 프로젝트에 설치된 모든 앱에 대한 migration을 생성하며 적용되지는 않는다
+    * ```migrate``` : 실제 데이터베이스에 적용된다.
+***
+## Part 4
+> 장고 관리자 사이트 이해, 모델을 위한 레코드 생성하기
