@@ -2,8 +2,8 @@
 > 링크 : https://developer.mozilla.org/ko/docs/Learn/Server-side/Django/skeleton_website
 * 본 튜토리얼은 책 빌리는 도서 웹 사이트 제작을 목표로 한다.
 ## 목차
-* ### [Part 3. 모델 생성하기]()
-* ### [Part 4. 관리자 사이트 만들기]()
+* ### [Part 3. 모델 생성하기](#part-3)
+* ### [Part 4. 관리자 사이트 만들기](#part-4)
 ***
 
 ## Part 3
