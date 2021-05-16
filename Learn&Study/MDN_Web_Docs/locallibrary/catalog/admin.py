@@ -8,6 +8,7 @@ from catalog.models import Author, Genre, Book, BookInstance
 admin.site.register(Genre)
 #admin.site.register(BookInstance)
 
+# 어드민 클래스 정의
 class AuthorAdmin(admin.ModelAdmin) :
     list_distplay = ('last_name', 'first_name', 'date_of_birth', 'date_of_death')
     fields = ['first_name', 'last_name', ('date_of_birth', 'date_of_death')]
