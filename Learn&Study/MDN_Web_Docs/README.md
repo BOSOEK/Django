@@ -4,6 +4,7 @@
 ## 목차
 * ### [Part 3. 모델 생성하기](#part-3)
 * ### [Part 4. 관리자 사이트 만들기](#part-4)
+* ### [Part 5. 홈페이지 만들기](#part-5)
 ***
 
 ## Part 3
@@ -157,4 +158,95 @@
     ```
     class 어드민_모델_클래스(admin.ModelAdmin) :
         inlines = [인스턴스 모델]
+    ```
+***
+## Part 5
+> url맵과 뷰를 생성, 모델로부터 데이터를 가져오고 템플릿 생성하기
+
+> HTTP 요청 & 응답 처리시 필요한 요소중 이미 구현된 모델을 제외한, 요소들
+    * URL 매퍼 : 적절한 view 함수들을 위해 지원되는 URL들을 포워딩하기 위해서.
+    * View 함수들 : 요청된 데이터를 모델들에게서 가져오고, 데이터를 표시하는 HTML 페이지를 생성 & 그리고 브라우저 안의 view로 페이지들을 사용자에게 반환하기 위해.
+    * 템플릿들 : 데이터를 뷰들 안에 렌더링할 때 사용하기 위해.
+### index page(색인) 만들기
+> ```catalog/``` index 페이지는 데이터베이스 안의 레코드들의 생성 개수 및 몇가지 정적 HTML을 포함한다.(이를 위해 URL 매핑, 뷰, 템플릿을 생성한다.)
+* ### URL 매핑
+    * ```catalog/```로 시작하는 URL을 받았을 때 ```catalog.urls```가 나머지 문자열을 처리하도록 한다.
+    ```
+    # locallibrary/urls.py
+    urlpatterns += [
+        path('catalog/', include('catalog.urls'))
+    ]
+    ```
+    * URL패턴 감지시 views.py파일 안에서 index()로 이름지어진 view 함수를 가져온다.
+    ```
+    # /catalog/urls.py
+    urlpatterns = [
+        path('', views.index, name='index'),
+    ] # views안에서 index()라고 정의된 함수 실행
+    ```
+* ### View : HTTP 요청 처리, HTML 템플릿으로 데이터를 렌더링하고 생성된 HTML을 HTTP 응답으로 반환한다.
+    > __애플리케이션/views.py__ 를 열고 render() 함수를 추가한다.
+
+    ``` 
+    from django.shorcuts import render
+    from 애클리케이션.models import 모델들
+    def index(request) :
+        변수 1 = 모델.objects.all().count()
+        변수 2 = 모델.objects.all().count()        
+        ...
+
+        context = {
+            '키 이름' = 변수 1,
+            '키 이름2' = 변수 2,
+            ...
+        }
+        return render(request, 'index.html', context = context)
+    ```
+    > render() 함수는 페이지를 생성하고 반환하는 함수로 다음 매개 변수를 사용한다 
+       
+    * HttpRequest인 request 객체
+    * 데이터 자리 표시자가 있는 HTML 템플릿
+    * context 데이터를 포함한 사전 가변
+    > 애플리케이션의 템플릿은 'templates'의 파일중에서 찾는다(애프릴케이션/templates/index.html)
+* ### 템플릿 확장
+    > 템플릿 변수 : {{}} -> 이중 줄괄호(뷰에서 콘텐츠로 지정한 변수의 키 이름이 된다.)
+    > 템플릿 함수(태그) : {% %} -> 중괄호와 백분율 기호
+
+    * 기본 템플릿 설정
+    ```
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    {% block title %}<title>Local Library</title>{% endblock %}
+    </head>
+    <body>
+    {% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}
+    {% block content %}<!-- default content text (typically empty) -->{% endblock %}
+    </body>
+    </html>
+    ```
+
+    * 대체 템플릿 섹션 선언
+    ```
+    {% extends "기본 템플릿" %} # 기본 템플릿을 가져와 수정
+    {% block content %}  # 콘텐트 부분에 새로운 태그 넣기
+    <h1>Local Library Home</h1>
+    <p>Welcome to LocalLibrary, a website developed by <em>Mozilla Developer Network</em>!</p>
+    {% endblock %}
+    ```
+
+    * 동적 콘텐츠 섹션 
+    ```
+    <li><strong>Books:</strong> {{ num_books }}</li>
+    <li><strong>Copies:</strong> {{ num_instances }}</li>
+    <li><strong>Copies available:</strong> {{ num_instances_available }}</li>
+    <li><strong>Authors:</strong> {{ num_authors }}</li>
+    ```
+* ### 템플릿에서 정적 파일 참조
+    > 장고에서는 ```STATIC_URL``` 전역 설정과 관련된 템플릿 위치를 지정할 수 있다.
+    * 정적을 지정하는 템플릿 태그를 호출한다.
+    * ```static``` 템플릿 테그를 사용해 필요한 파일의 상대 URL을 지정한다
+    ```
+    { % load static % }
+    <img src = "{% static 'catalog/images/local.png %}">
     ```
