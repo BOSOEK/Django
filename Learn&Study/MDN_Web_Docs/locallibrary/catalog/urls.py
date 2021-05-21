@@ -7,4 +7,5 @@ urlpatterns = [
     # path()함수는 name 매개변수를 지정하며, 이름의 매퍼를 반전시킬 수도 있다.
     # 즉, 매퍼가 처리하도록 설계된 URL을 동적으로 생성하기 위해서(페이지 이동 등)
 
+    path('books/', views.BookListView.as_view(), name='books'),
 ]
