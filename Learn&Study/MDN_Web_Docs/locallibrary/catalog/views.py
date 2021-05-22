@@ -1,5 +1,6 @@
 # 템플릿과 데이터를 이용해 HTML 파일을 생성하는 render 포함
 from django.shortcuts import render
+from django.views import generic
 
 # Create your views here.
 # 뷰는 HTTP 요청을 처리하고, 데이터베이스에서 데이터를 가져오고,
@@ -39,3 +40,9 @@ def index(request) :
     # request : HttpRequest인 원본 객체
     # 데이터에 대한 플레이스홀더들을 갖고 있는 HTML 템플릿
     # context
+
+class BookListView(generic.ListView) :
+    model = Book
+
+    def get_queryset(self):
+        return Book.objects.filter(title__icontains='war')[:5]
