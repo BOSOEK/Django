@@ -5,6 +5,7 @@
 * ### [Part 3. 모델 생성하기](#part-3)
 * ### [Part 4. 관리자 사이트 만들기](#part-4)
 * ### [Part 5. 홈페이지 만들기](#part-5)
+* ### [Part 6. 일반 목록 및 상세보기](#part-6)
 ***
 
 ## Part 3
@@ -250,3 +251,5 @@
     { % load static % }
     <img src = "{% static 'catalog/images/local.png %}">
     ```
+## Part 6
+    

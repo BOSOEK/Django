@@ -41,8 +41,16 @@ def index(request) :
     # 데이터에 대한 플레이스홀더들을 갖고 있는 HTML 템플릿
     # context
 
+# books/ 링크로 들어오면 실행되는 모델
 class BookListView(generic.ListView) :
     model = Book
 
-    def get_queryset(self):
+    def get_queryset(self): # 정쟁이 포함된 책 5권 얻기
         return Book.objects.filter(title__icontains='war')[:5]
+
+    def get_context_data(self, **kwargs):
+        # 컨텍스트를 얻으려 기본 구현을 호출
+        context = super(BookListView, self).get_context_data(**kwargs)
+        # 데이터를 생성하고 컨텍스트에 추가
+        context['some_data'] = 'This is just some data'
+        return context
