@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Question
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
 
 # Create your views here.
 def index(request) :
@@ -26,3 +27,14 @@ def detail(request, question_id) : # question_id는 URL 매핑에 있던 questio
     # 모델 기본키로 모델 객체를 반환하고 없으면 404 페이지를 반환한다.
     context = {'question' : question}
     return render(request, 'pybo/question_detail.html', context)
+
+def answer_create(request, question_id) :
+    # request : pybo/question_detail.html에서 textarea에 입력된 데이터가 넘어옴
+    # question_id : pybo/answer/create/2가 요청시 2가 넘어옴
+    """
+    pybo 답변등록
+    """
+    question = get_object_or_404(Question, pk=question_id)
+    question.answer_set.create(content=request.POST.get('content'), create_date=timezone.now())
+    # ---------------------------------- [edit] ---------------------------------- #
+    return redirect('pybo:detail', question_id=question.id)
