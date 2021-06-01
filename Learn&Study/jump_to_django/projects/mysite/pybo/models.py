@@ -16,5 +16,5 @@ class Question(models.Model) :
 class Answer(models.Model) :
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     # 왜래키로 다른 모델 속성 가지기(모델 연결), on_delete=models.CASCADE는 답변의 질문이 삭제시 답변도 함께 삭제
-    content = models.TextField
+    content = models.TextField()
     create_date = models.DateTimeField()
